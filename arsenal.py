@@ -1,35 +1,29 @@
-from flask import Flask, render_template
 import requests
 import pandas as pd
 from datetime import datetime
 
-app = Flask(__name__)
+ # Define the API endpoint
+url = "https://api.football-data.org/v2/teams/57/matches"  
 
-@app.route('/')
-def home():
-    # Define the API endpoint
-    url = "https://api.football-data.org/v2/teams/57/matches"  
+ # 57 is the ID for Arsenal
 
-    # 57 is the ID for Arsenal
-
-    headers = {
+headers = {
         "X-Auth-Token": "42f8678a420b4f18bcbe614ef0b58c8e" 
     }
-
-    today_date = datetime.today().strftime('%Y-%m-%d')
-
-    # Specify parameters to filter matches - the API limits to <750 days
-    params = {
+today_date = datetime.today().strftime("%Y-%m-%d")
+    
+# Specify parameters to filter matches - the API limits to <750 days
+params = {
         "dateFrom": "2022-08-08",
         "dateTo": today_date,  
         "status": "FINISHED"
     }
 
-    # Make the API request
-    response = requests.get(url, headers=headers, params=params)
+# Make the API request
+response = requests.get(url, headers=headers, params=params)
 
-    # Check if the request was successful
-    if response.status_code == 200:
+# Check if the request was successful
+if response.status_code == 200:
         # Parse the JSON response
         data = response.json()
 
@@ -50,11 +44,3 @@ def home():
 
         # Create a DataFrame from the match data list
         df = pd.DataFrame(match_data)
-
-        # Render the DataFrame in the HTML template
-        return render_template('matches.html', table=df.to_html(index=False))
-    else:
-        return "Failed to fetch data:", response.status_code
-
-if __name__ == '__main__':
-    app.run(debug=True)
