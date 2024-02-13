@@ -6,3 +6,4 @@ Before we start :
 Domain wording
 A Competition represents a football league (e.g. Premiere League). It is defined by an id, a unique two to four-letter-code and has a type. It consists of Seasons, that hold a number of scheduled fixtures named Match. A certain number of Teams participate in one particular Season of a Competition.
 
+To be updated: 13/2/2024
