@@ -44,3 +44,5 @@ if response.status_code == 200:
 
         # Create a DataFrame from the match data list
         df = pd.DataFrame(match_data)
+# Save DataFrame to a CSV file
+df.to_csv('matches_since_2022.csv', index=False)
